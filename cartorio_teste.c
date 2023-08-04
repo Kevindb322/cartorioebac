@@ -44,6 +44,7 @@ int registro()
 	{
 //Aparencia	
 		titulo();
+
 //Cadastro CPF
 		printf("Opção de cadastro selecionado:\n\n");
 		printf("Por favor digite o CPF do usuário:\n");
@@ -94,7 +95,7 @@ int registro()
 		system("pause");
 		system("cls");
 
-		if (repeticao() == 0)
+		if (repeticao_menu(1) == 0)
 		{
 			loop = 2;
 			system("cls");
@@ -109,14 +110,17 @@ int consulta()
 	char cpf[40];
 	char conteudo[200];
 	int loop = 0;
+
 //Início	
 	while (loop != 2)
 	{
+//Apareencia
 		titulo();
 		printf("Consultar nomes selecionado:\n");
 		printf("Digite o CPF a ser consultado:\n");
 		scanf("%s", cpf);
-		
+
+//Abrir Arquivo		
 		FILE *file;
 		file = fopen(cpf, "r");
 	
@@ -139,7 +143,7 @@ int consulta()
 			system("pause");
 			system("cls");
 		}
-		if (repeticao() == 0)
+		if (repeticao_menu(2) == 0)
 		{
 			loop = 2;
 			system("cls");
@@ -149,22 +153,118 @@ int consulta()
 
 int deletar()
 {
-	titulo();
-	printf("Deletar nomes selecionado:\n");
-
-	system("pause");
-	system("cls");
+// Variáveis
+	char cpf[40];
+	int loop = 0;
 	
-}
-
-int repeticao()
-{
-	int op = 0;
-	int repetir = 0;
-	
-	while (repetir != 1)
+// Inicio	
+	while (loop != 2)
 	{
 		titulo();
+		printf("Deletar nomes selecionado:\n");
+		printf("Por favor, digite o CPF do usuário a ser deletado:\n");
+		scanf("%s", cpf);
+		
+		FILE *file;
+		file = fopen(cpf, "r");
+	
+		if (file == NULL)
+		{
+			printf("Usuário inexistente!!!\n"); 
+			printf("Por favor verifique o CPF digitado e tente novamente.\n");
+			system("pause");
+			system("cls");
+			fclose(file);
+		}
+		else
+		{
+			if(repeticao_delete(cpf) == 1)
+			{
+				titulo();
+				printf("Deletar nomes selecionado:\n");
+				printf("Usuário removido com sucesso!!!\n");
+				system("pause");
+				fclose(file);
+				remove(cpf);
+			}
+			else
+			{
+				titulo();
+				printf("Tudo bem, usuário não deletado.\n");
+				system("pause");
+				fclose(file);
+			}
+			
+		}
+		
+		
+		if (repeticao_menu(3) == 0)
+		{
+			loop = 2;
+		}		
+	}
+}
+
+int repeticao_delete(char cpf[40])
+{
+// Variáveis
+	int op = 0;
+	int repetir = 0;
+
+//Inicio
+	while (repetir != 1)
+	{
+		system("cls");
+		titulo();
+		printf("O CPF: %s está prestes a ser deletado do sistema.\n", cpf);
+		printf("Tem certeza que deseja deletar este usuário?\n");
+		printf("\t1 - Sim.\n");
+		printf("\t2 - Não.\n");
+		scanf("%d", &op);
+		switch(op)
+		{
+			case (1):
+				system("cls");
+				return 1;
+			break;
+			
+			case (2):
+				system("cls");
+				return 0;				
+			break;
+			
+			default:
+				printf("Opção selecionada inválida.\n");
+				system("pause");
+				system("cls");
+			break;
+		}
+	}
+}
+
+int repeticao_menu(int menu)
+{
+// Variáveis
+	int op = 0;
+	int repetir = 0;
+
+// Inicio	
+	while (repetir != 1)
+	{
+		system("cls");
+		titulo();
+		switch(menu)
+		{
+			case (1):
+				printf("A opção selecionada é a de registrar usuários.\n");
+				break;
+			case (2):
+				printf("A opção selecionada é a de consultar usuários.\n");
+				break;
+			case (3):
+				printf("A opção selecionada é a de deletar usuários.\n");
+				break;
+		}
 		printf("Deseja repetir esta operação:\n");
 		printf("\t1 - Sim.\n");
 		printf("\t2 - Não.\n");
@@ -190,7 +290,7 @@ int repeticao()
 	}
 }
 
-
+// FUNÇÃO PRINCIPAL
 int main()
 {
 //Variáveis

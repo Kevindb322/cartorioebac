@@ -1,6 +1,7 @@
-#include <stdio.h>																									//biblioteca de comunicação com o usuário
-#include <stdlib.h>																									//Alocação de espaço na memória
-#include <locale.h>																									//Biblioteca de alocação de texto por região
+#include <stdio.h>																									//biblioteca de comunicaï¿½ï¿½o com o usuï¿½rio
+#include <stdlib.h>	
+#include <stdbool.h>																								//Alocaï¿½ï¿½o de espaï¿½o na memï¿½ria
+#include <locale.h>																									//Biblioteca de alocaï¿½ï¿½o de texto por regiï¿½o
 #include <string.h>																									//Biblioteca responsavel por cuidar das strings
 
 int titulo()
@@ -10,7 +11,7 @@ int titulo()
 	printf("++++      +   +   + \n");
 	printf("+         +   +   + \n");
 	printf("++++++     + + + +                     ######################################\n");
-	printf("                                       #########  Cartório da EBAC  #########\n");
+	printf("                                       #########  Cartorio da EBAC  #########\n");
 	printf("+++               +                    ######################################\n");
 	printf("   ++         + \n");
 	printf("    ++    +   +\n");
@@ -18,9 +19,44 @@ int titulo()
 	printf("+++               + \n\n");	
 }
 
+
+int login()
+{
+	char usuario[20];
+	char senha[20];
+	char usuarioc[] = "admin";
+	char senhac[] = "admin";
+	bool ver = false;
+	while (ver == false)	
+	{
+		printf ("Digite o nome do usuÃ¡rio:\n");
+		scanf ("%s", usuario);
+
+		printf ("Digite a senha:\n");
+		scanf ("%s", senha);
+
+		if (strcmp(usuario,usuarioc) == 0 && strcmp(senha, senhac) == 0)
+		{
+			system("cls");
+			ver = true;
+			printf ("Usuario logado com sucesso.");
+			system("pause");
+			system ("cls");
+		}
+		else
+		{
+			system("cls");
+			ver = false;
+			printf ("Falha ao autenticar usuario, por favor cheque novamente.");
+			system("pause");
+			system("cls");
+		}
+	}
+}
+
 int menuP()
 {
-	printf("Escolha a opção desejada:\n\n");
+	printf("Escolha a opcao desejada:\n\n");
 	printf("\t1 - Registrar nomes.\n");																				// o \t da um tab
 	printf("\t2 - Consultar nomes.\n");
 	printf("\t3 - Deletar nomes.\n");
@@ -29,25 +65,25 @@ int menuP()
 
 int registro()
 {
-//Variáveis
+//Variaveis
 	char arquivo[40];
 	char cpf[11];
 	char nome[40];
 	char sobrenome[40];
 	char cargo[40];
-	int loop = 0;																										//Loop da função registro
+	int loop = 0;																										//Loop da funï¿½ï¿½o registro
 	int loop_Cadastrar = 0;																								//Repete a pergunta se deseja realizar mais algum cadastro
-	int op = 0;																											//Opção do usuario de cadastrar mais algum individuo
+	int op = 0;																											//Opï¿½ï¿½o do usuario de cadastrar mais algum individuo
 	
-//Início
+//Inicio
 	while (loop != 2)
 	{
 //Aparencia	
 		titulo();
 
 //Cadastro CPF
-		printf("Opção de cadastro selecionado:\n\n");
-		printf("Por favor digite o CPF do usuário:\n");
+		printf("Opcao de cadastro selecionado:\n\n");
+		printf("Por favor digite o CPF do usuario:\n");
 		scanf("%s", cpf);
 	
 		strcpy(arquivo, cpf);																							//Copia o valor das strings
@@ -55,16 +91,16 @@ int registro()
 //criando arquivo e adicionando cpf	
 		FILE *file;																										//Cria o arquivo
 		file = fopen(arquivo, "w");																						//Escreve no arquivo
-		fprintf(file, cpf);																								//Salva o valor da variável
+		fprintf(file, cpf);																								//Salva o valor da variï¿½vel
 		fclose(file);																									//Fecha o arquivo
 
-//Adicionando espaço
+//Adicionando espaco
 		file = fopen(arquivo, "a");
 		fprintf(file, "\n");
 		fclose(file);
 
 //Cadastro do nome
-		printf("Digite o nome do usuário:\n");
+		printf("Digite o nome do usuario:\n");
 		scanf("%s", nome);
 
 //Adicionando nome no arquivo
@@ -72,7 +108,7 @@ int registro()
 		fprintf(file,"Nome: %s ", nome);
 
 //Cadastro do sobrenome
-		printf("Digite o sobrenome do usuário:\n");
+		printf("Digite o sobrenome do usuario:\n");
 		scanf("%s", sobrenome);
 
 //Adicionando sobrenome no arquivo
@@ -80,7 +116,7 @@ int registro()
 
 
 //Cadastro do cargo
-		printf("Digite o cargo do usuário:\n");
+		printf("Digite o cargo do usuario:\n");
 		scanf("%s", cargo);
 
 //Adicionando cargo no arquivo
@@ -106,12 +142,12 @@ int registro()
 
 int consulta()
 {
-//Variáveis
+//Variaveis
 	char cpf[40];
 	char conteudo[200];
 	int loop = 0;
 
-//Início	
+//Inicio	
 	while (loop != 2)
 	{
 //Apareencia
@@ -126,12 +162,12 @@ int consulta()
 	
 		if (file == NULL)
 		{
-			printf("Arquivo não localizado.\n");
+			printf("Arquivo nao localizado.\n");
 			system("cls");
 		}
 		else
 		{
-			printf("As informações do usuario:\n");
+			printf("As informacoes do usuario:\n");
 			printf("CPF: ");
 		
 			while(fgets(conteudo, 200, file) != NULL)
@@ -153,7 +189,7 @@ int consulta()
 
 int deletar()
 {
-// Variáveis
+// Variaveis
 	char cpf[40];
 	int loop = 0;
 	
@@ -162,7 +198,7 @@ int deletar()
 	{
 		titulo();
 		printf("Deletar nomes selecionado:\n");
-		printf("Por favor, digite o CPF do usuário a ser deletado:\n");
+		printf("Por favor, digite o CPF do usuario a ser deletado:\n");
 		scanf("%s", cpf);
 		
 		FILE *file;
@@ -170,7 +206,7 @@ int deletar()
 	
 		if (file == NULL)
 		{
-			printf("Usuário inexistente!!!\n"); 
+			printf("Usuario inexistente!!!\n"); 
 			printf("Por favor verifique o CPF digitado e tente novamente.\n");
 			system("pause");
 			system("cls");
@@ -182,7 +218,7 @@ int deletar()
 			{
 				titulo();
 				printf("Deletar nomes selecionado:\n");
-				printf("Usuário removido com sucesso!!!\n");
+				printf("Usuario removido com sucesso!!!\n");
 				system("pause");
 				fclose(file);
 				remove(cpf);
@@ -190,7 +226,7 @@ int deletar()
 			else
 			{
 				titulo();
-				printf("Tudo bem, usuário não deletado.\n");
+				printf("Tudo bem, usuario nao deletado.\n");
 				system("pause");
 				fclose(file);
 			}
@@ -207,7 +243,7 @@ int deletar()
 
 int repeticao_delete(char cpf[40])
 {
-// Variáveis
+// Variaveis
 	int op = 0;
 	int repetir = 0;
 
@@ -216,10 +252,10 @@ int repeticao_delete(char cpf[40])
 	{
 		system("cls");
 		titulo();
-		printf("O CPF: %s está prestes a ser deletado do sistema.\n", cpf);
-		printf("Tem certeza que deseja deletar este usuário?\n");
+		printf("O CPF: %s esta prestes a ser deletado do sistema.\n", cpf);
+		printf("Tem certeza que deseja deletar este usuario?\n");
 		printf("\t1 - Sim.\n");
-		printf("\t2 - Não.\n");
+		printf("\t2 - Nao.\n");
 		scanf("%d", &op);
 		switch(op)
 		{
@@ -234,7 +270,7 @@ int repeticao_delete(char cpf[40])
 			break;
 			
 			default:
-				printf("Opção selecionada inválida.\n");
+				printf("Opcao selecionada invalida.\n");
 				system("pause");
 				system("cls");
 			break;
@@ -244,7 +280,7 @@ int repeticao_delete(char cpf[40])
 
 int repeticao_menu(int menu)
 {
-// Variáveis
+// Variaveis
 	int op = 0;
 	int repetir = 0;
 
@@ -256,18 +292,18 @@ int repeticao_menu(int menu)
 		switch(menu)
 		{
 			case (1):
-				printf("A opção selecionada é a de registrar usuários.\n");
+				printf("A opcao selecionada e a de registrar usuarios.\n");
 				break;
 			case (2):
-				printf("A opção selecionada é a de consultar usuários.\n");
+				printf("A opcao selecionada e a de consultar usuarios.\n");
 				break;
 			case (3):
-				printf("A opção selecionada é a de deletar usuários.\n");
+				printf("A opcao selecionada e a de deletar usuarios.\n");
 				break;
 		}
-		printf("Deseja repetir esta operação:\n");
+		printf("Deseja repetir esta operacao:\n");
 		printf("\t1 - Sim.\n");
-		printf("\t2 - Não.\n");
+		printf("\t2 - Nao.\n");
 		scanf("%d", &op);
 		switch(op)
 		{
@@ -282,7 +318,7 @@ int repeticao_menu(int menu)
 			break;
 			
 			default:
-				printf("Opção selecionada inválida.\n");
+				printf("Opcao selecionada invalida.\n");
 				system("pause");
 				system("cls");
 			break;
@@ -290,30 +326,33 @@ int repeticao_menu(int menu)
 	}
 }
 
-// FUNÇÃO PRINCIPAL
+// FUNCAO PRINCIPAL
 int main()
 {
-//Variáveis
+//Variaveis
 	int opcao = 0;
 	int loop = 1;
-	
-	
-	setlocale(LC_ALL, "Portuguese");																				//Seleciona o idioma, trazendo os acentos para o nosso programa
 
-//Início
+		
+//Seleciona o idioma, trazendo os acentos para o nosso programa	
+    setlocale(LC_ALL, "Portuguese");
+
+//Inicio
+	login();
+
 	while (loop != 2)
 	{
-		titulo();																									//Chama a função do logo
-		menuP();																									//Chama a função do Menu Principal
-		printf("Sua opção: ");
-		scanf("%d", &opcao);																						//Registra a opção do usuário
+		titulo();																									//Chama a funï¿½ï¿½o do logo
+		menuP();																									//Chama a funï¿½ï¿½o do Menu Principal
+		printf("Sua opcao: ");
+		scanf("%d", &opcao);																						//Registra a opï¿½ï¿½o do usuï¿½rio
 		system("cls");																								//Limpa a tela
 	 		
 		switch (opcao)
 		{
 			case (0):				
-				titulo();																							//Chama a função do logo
-				printf("Obrigado por utilizar nosso cartório.\n");
+				titulo();																							//Chama a funï¿½ï¿½o do logo
+				printf("Obrigado por utilizar nosso cartorio.\n");
 				system("pause");		
 				system("cls");
 				printf("Programa finalizado!!! Aperte qualquer tecla para sair.\n");
@@ -326,19 +365,19 @@ int main()
 			break;
 			
 			case (2):
-				consulta();																							//Chama a função para consultar
+				consulta();																							//Chama a funï¿½ï¿½o para consultar
 			break;
 				
 			case (3):
-				deletar();																							//Chama a função para deletar
+				deletar();																							//Chama a funï¿½ï¿½o para deletar
 			break;
 			
 			default:
 				titulo();
-				printf("Opção selecionada inválida.\n");
+				printf("Opcao selecionada invalida.\n");
 				system("pause");
 				system("cls");
 			break;
-		}																											//Fim switch case			
+		}				    																						//Fim switch case			
 	}																												//Fim loop while
 }
